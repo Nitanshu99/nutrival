@@ -1,0 +1,10 @@
+tensorflow
+keras
+torch
+transformers
+streamlit
+pandas
+pyarrow
+chromadb
+langgraph
+sentence-transformers
