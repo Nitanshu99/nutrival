@@ -35,11 +35,15 @@ nutrival/
 │
 ├── src/
 │   ├── offline/                # DATA OPTIMIZATION (Run Once)
+│   │   ├── clean_dataset.py    # Func: clean_images() -> Scans and deletes corrupt image files
 │   │   ├── optimize_text.py    # Func: rewrite_descriptions() -> LLM converts DB rows to natural captions
 │   │   └── build_index.py      # Func: create_vector_store() -> Embeds captions & saves to ChromaDB
 │   │
 │   ├── training/               # MODEL TRAINING
-│   │   └── train_classifier.py # Func: train_efficientnet() -> Fine-tunes Specialist on 255 classes
+│   │   ├── augmentation.py     # Func: get_augmentation_layer() -> Dynamic flip/rotate/blur pipeline
+│   │   ├── data_loader.py      # Func: load_and_combine_datasets() -> Loads & merges Indian/Chinese data
+│   │   ├── model_builder.py    # Func: build_specialist_model() -> Compiles EfficientNetB0
+│   │   └── train_classifier.py # Func: train_efficientnet() -> Main orchestrator for training
 │   │
 │   ├── vision/                 # IMAGE PROCESSING
 │   │   ├── efficientnet.py     # Func: predict_known_dish() -> Returns label & confidence score
@@ -128,9 +132,9 @@ Before runtime, we perform a one-time **Text Optimization** process using **Qwen
 
 **The Workflow:**
 
-1. **Input:** Read raw row: `"Chicken, broiler or fryer, breast, meat only, raw"`
+1. **Input:** Read raw row: `"Chicken, broiler... breast... raw"`
 2. **Prompt Qwen:** *"Rewrite this database entry into a short, visual caption for a photo"*
-3. **Output:** `"Raw meat of broiler or fryer chicken"`
+3. **Output:** `"Raw meat of a broiler chicken breast fillet"`
 4. **Store:** Save to new column `description_for_clip`
 
 ### Why This Optimizes Performance
