@@ -134,7 +134,7 @@ Before runtime, we perform a one-time **Text Optimization** process using **Qwen
 
 1. **Input:** Read raw row: `"Chicken, broiler... breast... raw"`
 2. **Prompt Qwen:** *"Rewrite this database entry into a short, visual caption for a photo"*
-3. **Output:** `"Raw meat of a broiler chicken breast fillet"`
+3. **Output:** `"Raw meat of broiler or fryer chicken"`
 4. **Store:** Save to new column `description_for_clip`
 
 ### Why This Optimizes Performance
